@@ -1,0 +1,47 @@
+
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "commonjs",
+    "lib": ["es2017"],
+    "allowJs": true,
+    "jsx": "react-native",
+    "noEmit": true,
+    "strict": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "paths": {
+      "*": ["src/utils/types/*.ts"],
+      "~/api": ["src/api"],
+      "~/assets/svg": ["src/assets/svg"],
+      "~/assets/images": ["src/assets/images"],
+      "~/assets/animations": ["src/assets/animations"],
+      "~/components": ["src/components"],
+      "~/screens": ["src/screens"],
+      "~/modules": ["src/modules"],
+      "~/services": ["src/services"],
+      "~/stores": ["src/stores"],
+      "~/theme": ["src/theme"],
+      "~/routes": ["src/routes"],
+      "~/utils": ["src/utils"],
+      "~/utils/types": ["node_modules/@types","src/utils/types"]
+    }
+  },
+  "types": ["src/utils/types/*"],
+  "include": [
+    "src/**/*",
+    ".eslintrc.js",
+    "index.js",
+    "react-native.config.js",
+    "metro.config.js",
+    "babel.config.js"
+  ],
+  "exclude": [
+    "node_modules", "babel.config.js", "metro.config.js", "jest.config.js"
+  ]
+}

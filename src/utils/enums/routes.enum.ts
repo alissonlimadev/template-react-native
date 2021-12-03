@@ -1,0 +1,17 @@
+export enum Stacks {
+  PUBLIC = 'STACK_PUBLIC',
+  AUTH = 'STACK_AUTH',
+  PRIVATE = 'STACK_PRIVATE',
+  MODAL = 'STACK_MODAL',
+}
+
+export enum Routes {
+  // PUBLIC ROUTES
+  LOGIN = 'LOGIN',
+  CONFIRM_LOGIN = 'CONFIRM_LOGIN',
+  RETRY_AUTH = 'RETRY_AUTH',
+  // MODAL ROUTES
+  INFO = 'INFO',
+  // PRIVATE ROUTES
+  HOME = 'HOME',
+}
