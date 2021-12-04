@@ -1,8 +1,54 @@
-import React, { FC } from 'react';
-import { Login } from './screens';
+import React, { useEffect, useState } from 'react';
+import { Provider } from 'mobx-react';
+import { StatusBar } from 'react-native';
+import SplashScreen from 'react-native-splash-screen';
+import { DropdownAlert } from '~/modules';
+import { Navigation } from '~/routes';
+import { NavigationActions } from '~/services';
+import store from '~/stores';
+import { ThemeController } from '~/theme';
+import { setAlert } from '~/utils';
+import Setup from './setup';
 
-const Main: FC = () => {
-  return <Login />;
+type State = {
+  token?: Token;
+  previouslyLogged: boolean;
+  loading: boolean;
 };
 
-export default Main;
+const App = () => {
+  const [state, setState] = useState<State>({
+    token: undefined,
+    previouslyLogged: false,
+    loading: true,
+  });
+
+  const onFinish = (params: State) => setState(params);
+
+  useEffect(() => {
+    if (!state.loading) {
+      SplashScreen.hide();
+    }
+  }, [state.loading]);
+
+  return (
+    <Provider rootStore={store}>
+      <ThemeController>
+        <Navigation
+          previouslyLogged={state.previouslyLogged}
+          token={state.token?.accessToken}
+          setNavigationTop={NavigationActions.setTopLevelNavigator}
+        />
+        <Setup onFinish={onFinish} />
+      </ThemeController>
+      <DropdownAlert
+        ref={(ref) => setAlert(ref)}
+        updateStatusBar={false}
+        closeInterval={4000}
+        defaultContainer={{ padding: 8, paddingTop: StatusBar.currentHeight }}
+      />
+    </Provider>
+  );
+};
+
+export default App;

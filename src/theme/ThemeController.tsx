@@ -3,50 +3,104 @@ import React, {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useMemo,
   useState,
 } from 'react';
-import { Appearance } from 'react-native';
+import { Appearance, StatusBar } from 'react-native';
 import { ThemeProvider } from 'styled-components';
-import { themeSelector } from './controller';
+import { DefaultTheme } from '~/modules';
+import { RemoteConfig, Storage } from '~/services';
+import { ThemeMode } from '~/utils';
+import themeDefault from './theme.json';
 
 type ThemeOptions = {
-  handleTheme(): void;
+  setDark(): void;
+  setLight(): void;
+  setSystemTheme(): void;
+  getRemoteTheme(): Promise<void>;
+  darkMode: boolean;
+};
+
+type ThemeConfig = {
+  dark: DefaultTheme;
+  light: DefaultTheme;
 };
 
 const ThemeContext = createContext<ThemeOptions>({
-  handleTheme: () => {},
+  setDark: () => {},
+  setLight: () => {},
+  setSystemTheme: () => {},
+  getRemoteTheme: async () => {},
+  darkMode: false,
 });
 
 const ThemeController: FC = ({ children }) => {
   const [darkMode, setDarkMode] = useState(false);
+  const [theme, setTheme] = useState({
+    dark: themeDefault,
+    light: themeDefault,
+  } as ThemeConfig);
 
-  const getSystemTheme = useCallback(() => {
+  const setDark = useCallback((): void => {
+    setDarkMode(true);
+    Storage.setThemeMode(ThemeMode.DARK);
+  }, [darkMode, theme]);
+
+  const setLight = useCallback((): void => {
+    Storage.setThemeMode(ThemeMode.LIGHT);
+    setDarkMode(false);
+  }, [darkMode, theme]);
+
+  const setSystemTheme = useCallback((): void => {
     const colorScheme = Appearance.getColorScheme();
-    console.log(`system using ${colorScheme?.toUpperCase()} theme`);
     setDarkMode(colorScheme === 'dark');
-  }, []);
+    Storage.setThemeMode(ThemeMode.SYSTEM);
+  }, [darkMode, theme]);
 
-  const handleTheme = useCallback(() => {
-    setDarkMode((oldState) => !oldState);
-  }, [darkMode]);
+  const handleTheme = async () => {
+    const themeMode = await Storage.getThemeMode();
+    if (themeMode) {
+      switch (themeMode) {
+        case ThemeMode.DARK:
+          return setDark();
+        case ThemeMode.DARK:
+          return setSystemTheme();
+        default:
+          return setLight();
+      }
+    }
+  };
 
-  const theme = useMemo(() => {
-    return themeSelector(darkMode);
-  }, [darkMode]);
+  const getRemoteTheme = async () => {
+    const darkTheme = await RemoteConfig.getValueJson('dark_theme');
+    const lightTheme = await RemoteConfig.getValueJson('light_theme');
+    setTheme({
+      dark: darkTheme as unknown as DefaultTheme,
+      light: lightTheme as unknown as DefaultTheme,
+    });
+    await handleTheme();
+  };
 
-  useEffect(() => {
-    getSystemTheme();
-  }, []);
+  const currentTheme = useMemo(
+    () => (darkMode ? theme.dark : theme.light),
+    [darkMode, theme],
+  );
 
   return (
     <ThemeContext.Provider
       value={{
-        handleTheme,
+        setDark,
+        setLight,
+        setSystemTheme,
+        getRemoteTheme,
+        darkMode,
       }}
     >
-      <ThemeProvider theme={theme}>{children}</ThemeProvider>
+      <StatusBar
+        animated
+        barStyle={darkMode ? 'light-content' : 'dark-content'}
+      />
+      <ThemeProvider theme={currentTheme}>{children}</ThemeProvider>
     </ThemeContext.Provider>
   );
 };
@@ -54,7 +108,7 @@ const ThemeController: FC = ({ children }) => {
 const useTheme = () => {
   const context = useContext(ThemeContext);
   if (!context) {
-    throw new Error('useClients must be user within an ClientsProvider');
+    throw new Error('useTheme must be theme within an ThemeProvider');
   }
   return context;
 };

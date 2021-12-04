@@ -29,6 +29,7 @@
       "~/theme": ["src/theme"],
       "~/routes": ["src/routes"],
       "~/utils": ["src/utils"],
+      "~/utils/enums": ["src/utils/enums"],
       "~/utils/types": ["node_modules/@types","src/utils/types"]
     }
   },

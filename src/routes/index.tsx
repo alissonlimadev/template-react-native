@@ -1,4 +1,5 @@
 import React, { useContext, useRef } from 'react';
+import { ErrorBoundary } from '~/components';
 import {
   NavigationContainer,
   NavigationContainerRef,
@@ -68,20 +69,22 @@ export const Navigation: React.FC<Props> = ({
   const initialRoute = token ? Stacks.PRIVATE : publicRoute;
 
   return (
-    <NavigationContainer
-      ref={setNavigationTop}
-      theme={contextTheme}
-      onStateChange={onNavigationStateChange}
-    >
-      <MainStack.Navigator
-        screenOptions={{ headerShown: false, presentation: 'modal' }}
-        initialRouteName={initialRoute}
+    <ErrorBoundary>
+      <NavigationContainer
+        ref={setNavigationTop}
+        theme={contextTheme}
+        onStateChange={onNavigationStateChange}
       >
-        <MainStack.Screen name={Stacks.PRIVATE} component={PrivateStack} />
-        <MainStack.Screen name={Stacks.PUBLIC} component={PublicStack} />
-        <MainStack.Screen name={Stacks.MODAL} component={ModalsStack} />
-        <MainStack.Screen name={Stacks.AUTH} component={AuthStack} />
-      </MainStack.Navigator>
-    </NavigationContainer>
+        <MainStack.Navigator
+          screenOptions={{ headerShown: false, presentation: 'modal' }}
+          initialRouteName={initialRoute}
+        >
+          <MainStack.Screen name={Stacks.PRIVATE} component={PrivateStack} />
+          <MainStack.Screen name={Stacks.PUBLIC} component={PublicStack} />
+          <MainStack.Screen name={Stacks.MODAL} component={ModalsStack} />
+          <MainStack.Screen name={Stacks.AUTH} component={AuthStack} />
+        </MainStack.Navigator>
+      </NavigationContainer>
+    </ErrorBoundary>
   );
 };

@@ -72,4 +72,8 @@ export default class AnalyticsService {
   static async clear(): Promise<void> {
     await Analytics.resetAnalyticsData();
   }
+
+  static async test(): Promise<void> {
+    await this.logEvent('test');
+  }
 }

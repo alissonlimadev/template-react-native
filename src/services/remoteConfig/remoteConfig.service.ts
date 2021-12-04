@@ -2,7 +2,7 @@ import RemoteConfig, {
   FirebaseRemoteConfigTypes,
 } from '@react-native-firebase/remote-config';
 
-const fetchInterval = false ? 300 : 0; // 5 minutes cache if prod
+const fetchInterval = 0; // 5 minutes cache if prod
 
 const remoteConfig = RemoteConfig();
 remoteConfig.setConfigSettings({

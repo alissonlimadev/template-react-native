@@ -1,5 +1,5 @@
-import { getTrackingStatus, requestTrackingPermission } from '../../modules';
-import { TRACKING_STATUS } from '../enums';
+import { getTrackingStatus, requestTrackingPermission } from '~/modules';
+import { TRACKING_STATUS } from '~/utils/enums';
 
 export const checkTrackingPermission = async (): Promise<boolean> => {
   let trackingStatus = await getTrackingStatus();
