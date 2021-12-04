@@ -76,7 +76,7 @@ export const Navigation: React.FC<Props> = ({
         onStateChange={onNavigationStateChange}
       >
         <MainStack.Navigator
-          screenOptions={{ headerShown: false, presentation: 'modal' }}
+          screenOptions={{ headerShown: false }}
           initialRouteName={initialRoute}
         >
           <MainStack.Screen name={Stacks.PRIVATE} component={PrivateStack} />
