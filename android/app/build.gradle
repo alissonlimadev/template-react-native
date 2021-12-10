@@ -2,15 +2,18 @@ apply plugin: "com.android.application"
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: 'com.google.firebase.firebase-perf'
-apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
 project.ext.envConfigFiles = [
-    debug: ".env.dev",
-    hmlDebug: ".env.hml",
-    prdDebug: ".env.prd",
-    releaseStaging: ".env.hml",
-    release: ".env.prd",
+  productiondebug: ".env.production",
+  productionrelease: ".env.production",
+  developmentrelease: ".env.development",
+  developmentdebug: ".env.development",
+  stagingrelease: ".env.staging",
+  stagingdebug: ".env.staging"
 ]
+
+
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
 import com.android.build.OutputFile
 
@@ -32,8 +35,6 @@ def enableProguardInReleaseBuilds = false
 def jscFlavor = 'org.webkit:android-jsc:+'
 
 def enableHermes = project.ext.react.get("enableHermes", false);
-
-// def nativeArchitectures = project.getProperties().get("reactNativeDebugArchitectures")
 
 android {
     ndkVersion rootProject.ext.ndkVersion
@@ -88,23 +89,7 @@ android {
         debug {
             signingConfig signingConfigs.debug
             resValue "string", "CodePushDeploymentKey", '"DEV_NAO_PRECISA"'
-            applicationIdSuffix ".dev"
-        }
-        hmlDebug {
-            initWith debug
-            matchingFallbacks = ['debug']
-            applicationIdSuffix ".hml"
-        }
-        prdDebug {
-            initWith debug
-            matchingFallbacks = ['debug']
-            applicationIdSuffix ".prd"
-        }
-        releaseStaging {
-            initWith release
             matchingFallbacks = ['debug', 'release']
-            signingConfig signingConfigs.release
-            resValue "string", "CodePushDeploymentKey", '"gZxeZUgRCZLfsu0ZgtEalLDBM2jeqEZRb6QiL"'
         }
         release {
             signingConfig signingConfigs.release
@@ -113,6 +98,13 @@ android {
             resValue "string", "CodePushDeploymentKey", '"VFEbyw9HDU5aLQXjoACWSVAE5_dMiZ3_atLvp"'
         }
     }
+
+    flavorDimensions "default"
+    productFlavors {
+        production {}
+        staging {}
+        development {}
+      }
 
     applicationVariants.all { variant ->
         variant.outputs.each { output ->
@@ -124,51 +116,6 @@ android {
             }
 
         }
-    }
-
-    gradle.taskGraph.beforeTask { Task task ->
-      if (task.name ==~ /process.*GoogleServices/) {
-          android.applicationVariants.all { variant ->
-              if (task.name ==~ /(?i)process${variant.name}GoogleServices/) {
-                  if(variant.buildType.name == 'release'){
-                    println "Release - copyng google-service.json to src/"
-                    copy {
-                        from "/src/release"
-                        into '.'
-                        include 'google-services.json'
-                    }
-                  } else if (variant.buildType.name == 'debug') {
-                    println "Debug - copyng google-service.json to src/"
-                    copy {
-                        from "/src/debug"
-                        into '.'
-                        include 'google-services.json'
-                    }
-                  } else if (variant.buildType.name == 'hmlDebug') {
-                    println "HmlDebug - copyng google-service.json to src/"
-                    copy {
-                        from "/src/hmlDebug"
-                        into '.'
-                        include 'google-services.json'
-                    }
-                  } else if (variant.buildType.name == 'prdDebug') {
-                    println "PrdDebug - copyng google-service.json to src/"
-                    copy {
-                        from "/src/prdDebug"
-                        into '.'
-                        include 'google-services.json'
-                    }
-                  } else {
-                    println "Releasestaging - copyng google-service.json to src/"
-                    copy {
-                        from "/src/releaseStaging"
-                        into '.'
-                        include 'google-services.json'
-                    }
-                  }
-              }
-          }
-      }
     }
 }
 
