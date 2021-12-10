@@ -3,7 +3,7 @@ import { AppState, AppStateStatus } from 'react-native';
 import { Env } from '~/modules';
 import { Crashlytics, RemoteConfig, Sentry, Storage } from '~/services';
 import { theme, useTheme } from '~/theme';
-import { APP_STATE, checkTrackingPermission, isIOS } from './utils';
+import { APP_STATE, Envs, checkTrackingPermission, isIOS } from './utils';
 
 type State = {
   token?: Token;
@@ -34,7 +34,7 @@ const SetupContainer: React.FC<Props> = ({ onFinish }) => {
 
   const secureEmulator = async (): Promise<void> => {
     try {
-      const isPRD = Env.ENV === 'PRD';
+      const isPRD = Env.ENV === Envs.PRD;
       if (isPRD) {
         // blockEmulator();
       }

@@ -1,13 +1,14 @@
 import * as Sentry from '@sentry/react-native';
 import { Env } from '~/modules';
-import { checkTrackingPermission } from '~/utils';
+import { Envs, checkTrackingPermission } from '~/utils';
 
+const isPRD = Env.ENV === Envs.PRD;
 export default class SentryService {
   static init(): void {
     console.log('dsn', Env.SENTRY_DSN);
     Sentry.init({
       dsn: Env.SENTRY_DSN,
-      environment: __DEV__ ? 'homolog' : 'production',
+      environment: isPRD ? 'production' : 'homolog',
     });
   }
 
