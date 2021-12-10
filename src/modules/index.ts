@@ -44,3 +44,4 @@ export {
 } from 'react-native-iphone-x-helper';
 export { isEmpty, get } from 'lodash';
 export { default as DropdownAlert } from 'react-native-dropdownalert';
+export { default as CodePush } from 'react-native-code-push';

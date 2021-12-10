@@ -2,13 +2,12 @@ import * as Sentry from '@sentry/react-native';
 import { Env } from '~/modules';
 import { checkTrackingPermission } from '~/utils';
 
-const isPRD = Env.ENV === 'PRD';
 export default class SentryService {
   static init(): void {
-    if (__DEV__) return;
+    console.log('dsn', Env.SENTRY_DSN);
     Sentry.init({
       dsn: Env.SENTRY_DSN,
-      environment: isPRD ? 'production' : 'homolog',
+      environment: __DEV__ ? 'homolog' : 'production',
     });
   }
 
@@ -20,6 +19,10 @@ export default class SentryService {
         email: userEmail,
       });
     }
+  }
+
+  static captureException(exception: Error | unknown): void {
+    Sentry.captureException(exception);
   }
 
   static test(): void {

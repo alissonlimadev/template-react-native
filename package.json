@@ -1,13 +1,21 @@
 {
   "name": "template",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "private": true,
   "scripts": {
-    "android": "react-native run-android",
-    "ios": "react-native run-ios",
+    "android": "yarn clean:android && adb reverse tcp:9090 tcp:9090 && ENVFILE=.env.dev npx react-native run-android --variant=debug",
+    "android:hml": "yarn clean:android && adb reverse tcp:9090 tcp:9090 && ENVFILE=.env.hml npx react-native run-android --variant=hmlDebug",
+    "android:prd": "yarn clean:android && adb reverse tcp:9090 tcp:9090 && ENVFILE=.env.prd npx react-native run-android --variant=prdDebug",
+    "android:bundle:debug": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/",
+    "android:bundle:release": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/build/intermediates/res/merged/release/",
+    "clean": "npx react-native clean-project-auto && yarn install && npx pod-install",
+    "clean:android": "cd android && ./gradlew clean && cd ..",
+    "ios": "npx pod-install && ENVFILE=.env.dev npx react-native run-ios --scheme='template'",
+    "ios:prd": "npx pod-install && ENVFILE=.env.prd npx react-native run-ios --scheme='template'",
+    "lint": "tsc && eslint 'src/**/*.{js,jsx,ts,tsx}' --fix",
     "start": "react-native start",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "clean": "react-native-clean-project"
+    "codepush:ios:prd": "appcenter codepush release-react -a alissonlimadev/RN-Template-iOS -d Production",
+    "codepush:android:prd": "appcenter codepush release-react -a alissonlimadev/RN-Template-Android -d Production"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.15.14",
@@ -26,6 +34,7 @@
     "mobx-react": "^7.2.0",
     "react": "17.0.2",
     "react-native": "0.66.0",
+    "react-native-code-push": "^7.0.2",
     "react-native-config": "^1.4.5",
     "react-native-device-info": "^8.4.0",
     "react-native-dropdownalert": "^4.3.0",

@@ -30,3 +30,9 @@ export const TextButton = styled.Text`
 `;
 
 export const Button = styled.TouchableOpacity``;
+
+export const DevText = styled.Text`
+  color: ${({ theme }) => theme.pallete.text.main};
+  font-size: ${({ theme }) => theme.fontSizes.sm}px;
+  padding-bottom: ${({ theme }) => theme.spacing.md}px;
+`;

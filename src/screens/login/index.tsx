@@ -1,8 +1,16 @@
 import React, { FC } from 'react';
+import { Env } from '~/modules';
 import { Analytics, Crashlytics, NavigationActions, Sentry } from '~/services';
 import { useTheme } from '~/theme';
 import { Routes, Stacks, useAlerts, useStores } from '../../utils';
-import { Button, Container, Text, TextButton, Wrapper } from './styles';
+import {
+  Button,
+  Container,
+  DevText,
+  Text,
+  TextButton,
+  Wrapper,
+} from './styles';
 
 const Login: FC = () => {
   const { example } = useStores();
@@ -21,6 +29,8 @@ const Login: FC = () => {
     <Container>
       <Wrapper>
         <Text>Template Alisson</Text>
+        <DevText>{`Ambiente: ${Env.ENV}`}</DevText>
+        <DevText>{`DevMode: ${__DEV__}`}</DevText>
         <Button onPress={setDark}>
           <TextButton>DarkTheme</TextButton>
         </Button>
