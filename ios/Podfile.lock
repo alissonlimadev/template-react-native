@@ -523,6 +523,8 @@ PODS:
   - RNSentry (3.2.7):
     - React-Core
     - Sentry (= 7.5.4)
+  - RNVectorIcons (9.0.0):
+    - React-Core
   - SDWebImage (5.11.1):
     - SDWebImage/Core (= 5.11.1)
   - SDWebImage/Core (5.11.1)
@@ -607,6 +609,7 @@ DEPENDENCIES:
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - "RNSentry (from `../node_modules/@sentry/react-native`)"
+  - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -740,6 +743,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-screens"
   RNSentry:
     :path: "../node_modules/@sentry/react-native"
+  RNVectorIcons:
+    :path: "../node_modules/react-native-vector-icons"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -820,6 +825,7 @@ SPEC CHECKSUMS:
   RNGestureHandler: e5c7cab5f214503dcefd6b2b0cefb050e1f51c4a
   RNScreens: 522705f2e5c9d27efb17f24aceb2bf8335bc7b8e
   RNSentry: bf1f0970fffd3519a5cf553217f281bbb5b10de4
+  RNVectorIcons: 4143ba35feebab8fdbe6bc43d1e776b393d47ac8
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SDWebImageWebPCoder: f93010f3f6c031e2f8fb3081ca4ee6966c539815
   Sentry: 5c5dd4005f3b7b9765d5a8871232cddbd0d888b7
@@ -827,6 +833,6 @@ SPEC CHECKSUMS:
   Yoga: c11abbf5809216c91fcd62f5571078b83d9b6720
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: ee883bdbb93a2bc8be41581d024f4ea77113382f
+PODFILE CHECKSUM: 67affaa099cd12146087df7dd3a7e6bdba4b5504
 
 COCOAPODS: 1.11.2

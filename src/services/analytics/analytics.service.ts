@@ -74,6 +74,14 @@ export default class AnalyticsService {
   }
 
   static async test(): Promise<void> {
-    await this.logEvent('test');
+    Analytics.logEvent('test', {
+      FLUX: 'TEST',
+      SCREEN: 'LOGIN',
+      BUTTON: 'TEST ACTION',
+    })
+      .then(() => {})
+      .catch((error) => {
+        console.log(error);
+      });
   }
 }

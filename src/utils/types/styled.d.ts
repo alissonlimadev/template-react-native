@@ -129,5 +129,9 @@ declare module 'styled-components' {
       card: number;
       input: number;
     };
+    metrics: {
+      buttonHeight: number;
+      inputHeight: number;
+    };
   }
 }

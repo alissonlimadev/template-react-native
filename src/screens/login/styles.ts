@@ -1,9 +1,7 @@
 import styled from 'styled-components/native';
-import { ScreenWrapper } from '~/components';
+import { Input, ScreenWrapper } from '~/components';
 
-export const Container = styled(ScreenWrapper).attrs({
-  fullWidth: true,
-})``;
+export const Container = styled(ScreenWrapper).attrs({})``;
 
 export const Wrapper = styled.View`
   justify-content: center;
@@ -35,4 +33,13 @@ export const DevText = styled.Text`
   color: ${({ theme }) => theme.pallete.text.main};
   font-size: ${({ theme }) => theme.fontSizes.sm}px;
   padding-bottom: ${({ theme }) => theme.spacing.md}px;
+`;
+
+export const WrapperForm = styled.View`
+  width: 100%;
+  padding-bottom: ${({ theme }) => theme.spacing.md}px;
+`;
+
+export const InputEmail = styled(Input)`
+  text-transform: lowercase;
 `;

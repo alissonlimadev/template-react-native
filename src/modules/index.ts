@@ -1,5 +1,4 @@
 export { withTheme } from 'styled-components';
-export { DefaultTheme } from 'styled-components/native';
 export { MobXProviderContext } from 'mobx-react';
 
 export {
@@ -18,6 +17,7 @@ export {
   default as styled,
   ThemeContext,
   ThemeProvider,
+  DefaultTheme,
 } from 'styled-components/native';
 export { createStackNavigator } from '@react-navigation/stack';
 export {
@@ -45,3 +45,16 @@ export {
 export { isEmpty, get } from 'lodash';
 export { default as DropdownAlert } from 'react-native-dropdownalert';
 export { default as CodePush } from 'react-native-code-push';
+export { FormHandles, SubmitHandler, useField } from '@unform/core';
+export { Form } from '@unform/mobile';
+export {
+  MaskedTextInput,
+  MaskedText,
+  MaskedTextInputProps,
+  MaskedTextProps,
+  mask,
+  unMask,
+} from 'react-native-mask-text';
+export { default as Icon } from 'react-native-vector-icons/MaterialCommunityIcons';
+import * as Yup from 'yup';
+export { Yup };

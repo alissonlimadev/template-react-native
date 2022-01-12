@@ -126,5 +126,9 @@
     "button": 3,
     "card": 6,
     "input": 3
+  },
+  "metrics": {
+    "buttonHeight": 50,
+    "inputHeight": 50
   }
 }
